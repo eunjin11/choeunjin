@@ -1,9 +1,7 @@
 ---
-import fs from 'node:fs';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getPublishedPosts, formatDate } from '../lib/posts';
 
-const hasProfileImage = fs.existsSync(new URL('../../public/profile.webp', import.meta.url));
 const posts = (await getPublishedPosts()).slice(0, 5);
 ---
 
@@ -13,11 +11,21 @@ const posts = (await getPublishedPosts()).slice(0, 5);
 			<h1>조은진</h1>
 			<p class="tagline">팀원을 행복하게 만들고 싶은 프론트엔드 개발자 조은진입니다.</p>
 			<dl class="contacts">
-				<div><dt>이메일</dt><dd><a href="mailto:whdmswls9207@gmail.com">whdmswls9207@gmail.com</a></dd></div>
-				<div><dt>GitHub</dt><dd><a href="https://github.com/eunjin11">github.com/eunjin11</a></dd></div>
+				<div>
+					<dt>이메일</dt>
+					<dd>
+						<a href="mailto:whdmswls9207@gmail.com">whdmswls9207@gmail.com</a>
+					</dd>
+				</div>
+				<div>
+					<dt>GitHub</dt>
+					<dd>
+						<a href="https://github.com/eunjin11">github.com/eunjin11</a>
+					</dd>
+				</div>
 			</dl>
 		</div>
-		{hasProfileImage && <img class="avatar" src="/profile.webp" alt="조은진 프로필 사진" width="176" height="176" />}
+		<img class="avatar" src="/profile.webp" alt="조은진 프로필 사진" width="176" height="176" />
 	</section>
 
 	<hr />
@@ -25,14 +33,11 @@ const posts = (await getPublishedPosts()).slice(0, 5);
 	<section>
 		<h2 class="section-title">자기 소개</h2>
 		<div class="intro">
+			<p>쉽고 편한 개발을 위한 개발 도구를 만들고 있어요. 내가 만든 도구로 팀원들이 행복하게 개발하기를 바랍니다.</p>
+			<p>프론트엔드 크로스 플랫폼 기술인 Lynx의 플랫폼 개발과 프로덕트 개발을 함께 하고 있습니다.</p>
 			<p>
-				쉽고 편한 개발을 위한 개발 도구를 만들고 있어요. 내가 만든 도구로 팀원들이 행복하게 개발하기를 바랍니다.
-			</p>
-			<p>
-				프론트엔드 크로스 플랫폼 기술인 Lynx의 플랫폼 개발과 프로덕트 개발을 함께 하고 있습니다.
-			</p>
-			<p>
-				좋아하는 것은 남들이 망할 것 같다고 생각하는 일에 도전하기, 어떻게든 되게 만들기, 커피 마시기, 글쓰기, 만화 보기, 영상 편집 등이 있어요.
+				좋아하는 것은 남들이 망할 것 같다고 생각하는 일에 도전하기, 어떻게든 되게 만들기, 커피 마시기, 글쓰기, 만화
+				보기, 영상 편집 등이 있어요.
 			</p>
 		</div>
 	</section>
@@ -76,19 +81,19 @@ const posts = (await getPublishedPosts()).slice(0, 5);
 	<section>
 		<div class="section-head">
 			<h2 class="section-title">최근 글</h2>
-			<a href="/" class="more">전체 보기 →</a>
+			<a href="/" class="more">
+				전체 보기 →
+			</a>
 		</div>
 		<ul class="post-list">
-			{
-				posts.map((post) => (
-					<li>
-						<a href={`/blog/${post.id}/`}>{post.data.title}</a>
-						<time class="muted" datetime={post.data.date.toISOString()}>
-							{formatDate(post.data.date)}
-						</time>
-					</li>
-				))
-			}
+			{posts.map((post) => (
+				<li>
+					<a href={`/blog/${post.id}/`}>{post.data.title}</a>
+					<time class="muted" datetime={post.data.date.toISOString()}>
+						{formatDate(post.data.date)}
+					</time>
+				</li>
+			))}
 		</ul>
 	</section>
 </BaseLayout>
@@ -150,6 +155,12 @@ const posts = (await getPublishedPosts()).slice(0, 5);
 		gap: 20px;
 		color: var(--text);
 	}
+	/* 이력과 오픈소스 목록이 같은 열에 맞춰지도록 왼쪽 라벨 너비와 간격을 공유해요. */
+	.timeline,
+	.projects {
+		--label-width: 104px;
+		--label-gap: 24px;
+	}
 	.timeline {
 		list-style: none;
 		padding: 0;
@@ -157,14 +168,14 @@ const posts = (await getPublishedPosts()).slice(0, 5);
 	.timeline li {
 		display: flex;
 		align-items: baseline;
-		gap: 24px;
+		gap: var(--label-gap);
 	}
 	.timeline li + li {
 		margin-top: 8px;
 	}
 	.when {
 		flex-shrink: 0;
-		width: 96px;
+		width: var(--label-width);
 		color: var(--text-muted);
 		font-variant-numeric: tabular-nums;
 	}
@@ -175,14 +186,14 @@ const posts = (await getPublishedPosts()).slice(0, 5);
 	.projects li {
 		display: flex;
 		align-items: baseline;
-		gap: 24px;
+		gap: var(--label-gap);
 	}
 	.projects li + li {
 		margin-top: 8px;
 	}
 	.projects .name {
 		flex-shrink: 0;
-		width: 96px;
+		width: var(--label-width);
 		font-weight: 600;
 	}
 	.projects .desc {
@@ -196,7 +207,7 @@ const posts = (await getPublishedPosts()).slice(0, 5);
 	@media (max-width: 720px) {
 		.projects li {
 			flex-wrap: wrap;
-			gap: 2px 12px;
+			gap: 2px var(--label-gap);
 		}
 		.projects .desc {
 			flex-basis: 100%;

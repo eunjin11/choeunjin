@@ -25,18 +25,22 @@ const path = Astro.url.pathname;
 	</head>
 	<body>
 		<header class="container header">
-			<a href="/" class="logo">조은진</a>
+			<a href="/" class="logo">
+				조은진
+			</a>
 			<nav>
-				<a href="/" class:list={{ active: path === '/' || path.startsWith('/blog') }}>블로그</a>
-				<a href="/about/" class:list={{ active: path.startsWith('/about') }}>소개</a>
+				<a href="/" class:list={{ active: path === '/' || path.startsWith('/blog') }}>
+					블로그
+				</a>
+				<a href="/about/" class:list={{ active: path.startsWith('/about') }}>
+					소개
+				</a>
 			</nav>
 		</header>
 		<main class="container">
 			<slot />
 		</main>
-		<footer class="container footer">
-			© {new Date().getFullYear()} 조은진
-		</footer>
+		<footer class="container footer">© {new Date().getFullYear()} 조은진</footer>
 	</body>
 </html>
 

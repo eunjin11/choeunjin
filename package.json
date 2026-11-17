@@ -9,9 +9,20 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "lint": "oxlint --deny-warnings",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "astro": "^7.4.12"
+  },
+  "packageManager": "yarn@4.18.0",
+  "devDependencies": {
+    "oxlint": "^1.93.0",
+    "prettier": "^3.10.1",
+    "prettier-plugin-astro": "^1.1.2",
+    "typescript": "^7"
   }
 }

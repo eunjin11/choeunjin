@@ -8,20 +8,18 @@ const posts = await getPublishedPosts();
 <BaseLayout>
 	<h1 class="section-title">블로그</h1>
 	<ul class="posts">
-		{
-			posts.map((post) => (
-				<li>
-					<a href={`/blog/${post.id}/`}>
-						<h2>{post.data.title}</h2>
-						{post.data.description && <p class="desc">{post.data.description}</p>}
-						<p class="muted">
-							<time datetime={post.data.date.toISOString()}>{formatDate(post.data.date)}</time>
-							{post.data.tags.length > 0 && <span> · {post.data.tags.map((t) => `#${t}`).join(' ')}</span>}
-						</p>
-					</a>
-				</li>
-			))
-		}
+		{posts.map((post) => (
+			<li>
+				<a href={`/blog/${post.id}/`}>
+					<h2>{post.data.title}</h2>
+					{post.data.description && <p class="desc">{post.data.description}</p>}
+					<p class="muted">
+						<time datetime={post.data.date.toISOString()}>{formatDate(post.data.date)}</time>
+						{post.data.tags.length > 0 && <span> · {post.data.tags.map((t) => `#${t}`).join(' ')}</span>}
+					</p>
+				</a>
+			</li>
+		))}
 	</ul>
 </BaseLayout>
 
