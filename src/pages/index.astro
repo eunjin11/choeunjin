@@ -1,16 +1,60 @@
 ---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getPublishedPosts, formatDate } from '../lib/posts';
+
+const posts = await getPublishedPosts();
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout>
+	<h1 class="section-title">블로그</h1>
+	<ul class="posts">
+		{
+			posts.map((post) => (
+				<li>
+					<a href={`/blog/${post.id}/`}>
+						<h2>{post.data.title}</h2>
+						{post.data.description && <p class="desc">{post.data.description}</p>}
+						<p class="muted">
+							<time datetime={post.data.date.toISOString()}>{formatDate(post.data.date)}</time>
+							{post.data.tags.length > 0 && <span> · {post.data.tags.map((t) => `#${t}`).join(' ')}</span>}
+						</p>
+					</a>
+				</li>
+			))
+		}
+	</ul>
+</BaseLayout>
+
+<style>
+	.posts {
+		list-style: none;
+		padding: 0;
+	}
+	.posts li {
+		border-top: 1px solid var(--line);
+		margin: 0;
+	}
+	.posts li:first-child {
+		border-top: 0;
+	}
+	.posts a {
+		display: block;
+		padding: 24px 0;
+		text-decoration: none;
+	}
+	.posts h2 {
+		font-size: var(--font-lg);
+		font-weight: 700;
+	}
+	.posts a:hover h2 {
+		text-decoration: underline;
+		text-underline-offset: 3px;
+	}
+	.desc {
+		margin-top: 4px;
+		color: var(--text-sub);
+	}
+	.muted {
+		margin-top: 8px;
+	}
+</style>

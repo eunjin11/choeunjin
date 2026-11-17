@@ -1,0 +1,76 @@
+---
+import '../styles/global.css';
+
+interface Props {
+	title?: string;
+	description?: string;
+}
+
+const siteName = '조은진';
+const { title, description = 'Lynx로 세계 정복을 꿈꾸는 지상 최강 개발자 조은진의 블로그' } = Astro.props;
+const pageTitle = title ? `${title} | ${siteName}` : siteName;
+const path = Astro.url.pathname;
+---
+
+<!doctype html>
+<html lang="ko">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="description" content={description} />
+		<meta property="og:title" content={pageTitle} />
+		<meta property="og:description" content={description} />
+		<title>{pageTitle}</title>
+	</head>
+	<body>
+		<header class="container header">
+			<a href="/" class="logo">조은진</a>
+			<nav>
+				<a href="/" class:list={{ active: path === '/' || path.startsWith('/blog') }}>블로그</a>
+				<a href="/about/" class:list={{ active: path.startsWith('/about') }}>소개</a>
+			</nav>
+		</header>
+		<main class="container">
+			<slot />
+		</main>
+		<footer class="container footer">
+			© {new Date().getFullYear()} 조은진
+		</footer>
+	</body>
+</html>
+
+<style>
+	.header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding-top: 28px;
+		padding-bottom: 28px;
+	}
+	.logo {
+		font-weight: 700;
+		text-decoration: none;
+	}
+	nav {
+		display: flex;
+		gap: 20px;
+	}
+	nav a {
+		text-decoration: none;
+		color: var(--text-muted);
+	}
+	nav a.active,
+	nav a:hover {
+		color: var(--text);
+	}
+	main {
+		padding-top: 32px;
+		padding-bottom: 80px;
+	}
+	.footer {
+		padding-bottom: 40px;
+		color: var(--text-muted);
+		font-size: var(--font-xs);
+	}
+</style>
