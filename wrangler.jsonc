@@ -1,0 +1,11 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "choeunjin",
+	"compatibility_date": "2026-11-01",
+	"assets": {
+		// yarn build 결과물을 정적 파일로 배포해요.
+		"directory": "./dist",
+		// 없는 주소로 들어오면 dist/404.html을 보여줘요.
+		"not_found_handling": "404-page",
+	},
+}

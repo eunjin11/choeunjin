@@ -20,6 +20,7 @@ yarn dev         # http://localhost:4321
 | `yarn dev`          | 로컬 개발 서버 실행 (`localhost:4321`)           |
 | `yarn build`        | 배포용 사이트를 `./dist/`에 빌드                 |
 | `yarn preview`      | 빌드 결과를 로컬에서 미리 보기                   |
+| `yarn preview:cf`   | 빌드 후 Cloudflare와 같은 환경으로 로컬 실행     |
 | `yarn lint`         | oxlint로 린트 (경고도 실패로 처리)               |
 | `yarn typecheck`    | TypeScript 7로 `.ts` 파일 타입 검사              |
 | `yarn format`       | Prettier로 전체 파일 포매팅                      |
@@ -53,6 +54,15 @@ draft: false # true면 목록에서 숨겨져요
 | `/`               | `src/pages/index.astro`          | 블로그 글 목록 |
 | `/blog/[글이름]/` | `src/pages/blog/[...slug].astro` | 글 상세        |
 | `/about/`         | `src/pages/about.astro`          | 소개           |
+| 없는 주소         | `src/pages/404.astro`            | 404 페이지     |
+
+## 배포
+
+Cloudflare Workers에 정적 사이트로 배포해요. 설정은 `wrangler.jsonc`에 있어요.
+
+- Cloudflare 대시보드에서 이 레포를 연결해 두면 `main`에 push할 때마다 자동으로 배포돼요.
+- 빌드 명령어는 `yarn build`, 배포 명령어는 `npx wrangler deploy`예요.
+- 다른 브랜치에 push하면 미리보기 URL이 따로 생겨요.
 
 ## 프로젝트 구조
 
@@ -66,5 +76,6 @@ draft: false # true면 목록에서 숨겨져요
 │   ├── lib/                 # 글 목록 정렬, 날짜 포맷
 │   ├── pages/               # 페이지 (파일 경로 = URL)
 │   └── styles/global.css    # 색상, 폰트 크기 토큰, 기본 스타일
-└── astro.config.mjs
+├── astro.config.mjs
+└── wrangler.jsonc           # Cloudflare 배포 설정
 ```
